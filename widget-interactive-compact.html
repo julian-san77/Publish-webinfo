@@ -1,0 +1,193 @@
+<!-- WIDGET VERSION - COMPACT FOR BLOGSPOT/WORDPRESS -->
+<!-- Copy paste code ini langsung ke HTML/JavaScript Widget -->
+
+<div class="lifespan-widget">
+<style>
+/* Scoped CSS - tidak akan konflik dengan tema blog */
+.lifespan-widget {
+    font-family: 'Poppins', -apple-system, sans-serif;
+    background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+    color: #ffffff;
+    padding: 30px;
+    border-radius: 20px;
+    margin: 20px 0;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+.lifespan-widget h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.lifespan-widget .widget-search {
+    width: 100%;
+    padding: 12px 15px;
+    background: #0f1419;
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+    font-family: inherit;
+}
+
+.lifespan-widget .widget-search:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.lifespan-widget .widget-cards {
+    display: grid;
+    gap: 15px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.lifespan-widget .widget-card {
+    background: rgba(255,255,255,0.05);
+    padding: 15px;
+    border-radius: 12px;
+    border-left: 4px solid #667eea;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.lifespan-widget .widget-card:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateX(5px);
+}
+
+.lifespan-widget .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.lifespan-widget .card-icon {
+    font-size: 2rem;
+}
+
+.lifespan-widget .card-name {
+    font-weight: 700;
+    font-size: 1.1rem;
+    flex: 1;
+    margin: 0 10px;
+}
+
+.lifespan-widget .card-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #a0aec0;
+}
+
+.lifespan-widget .stat-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.lifespan-widget .stat-value {
+    color: #fbbf24;
+    font-weight: 600;
+}
+
+.lifespan-widget .widget-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: white;
+    margin-top: 8px;
+}
+
+.lifespan-widget::-webkit-scrollbar {
+    width: 6px;
+}
+
+.lifespan-widget::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.05);
+    border-radius: 3px;
+}
+
+.lifespan-widget::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 3px;
+}
+</style>
+
+<h2>🔬 Eksplorasi Umur Makhluk Hidup</h2>
+<input type="text" class="widget-search" id="widgetSearch" placeholder="Cari hewan...">
+<div class="widget-cards" id="widgetCards"></div>
+
+<script>
+(function() {
+    // Compact data (subset paling menarik)
+    const widgetData = [
+        {name: "Ubur-ubur Abadi", icon: "🪼", mass: "< 1g", lifespan: "∞", fact: "Satu-satunya hewan biologis abadi!", badge: "Abadi"},
+        {name: "Hiu Greenland", icon: "🦈", mass: "1000 kg", lifespan: "400 thn", fact: "Puber di usia 150 tahun!"},
+        {name: "Paus Bowhead", icon: "🐋", mass: "100 ton", lifespan: "200 thn", fact: "Mutasi DNA super untuk perbaikan"},
+        {name: "Pohon Bristlecone", icon: "🌲", mass: "5 ton", lifespan: "5000 thn", fact: "Lebih tua dari piramida!"},
+        {name: "Gajah Afrika", icon: "🐘", mass: "6 ton", lifespan: "65 thn", fact: "40 alel TP53 = kebal kanker"},
+        {name: "Kakatua", icon: "🦜", mass: "0.9 kg", lifespan: "85 thn", fact: "Otak besar = umur panjang"},
+        {name: "Tikus Tanah Telanjang", icon: "🐭", mass: "32 g", lifespan: "30 thn", fact: "Hidup 10x tikus biasa!", badge: "Outlier"},
+        {name: "Kelelawar Myotis", icon: "🦇", mass: "8 g", lifespan: "40 thn", fact: "Terbang = metabolisme ekstrem", badge: "Outlier"},
+        {name: "Manusia", icon: "👨", mass: "70 kg", lifespan: "80 thn", fact: "2.5 miliar detak jantung!", badge: "Outlier"},
+        {name: "Great Dane", icon: "🐕", mass: "70 kg", lifespan: "8 thn", fact: "Paradoks: besar = pendek umur"},
+        {name: "Chihuahua", icon: "🐕", mass: "2.5 kg", lifespan: "15 thn", fact: "Kecil = panjang umur (anjing)"},
+        {name: "Tikus Lab", icon: "🐀", mass: "25 g", lifespan: "2.5 thn", fact: "Metabolisme super cepat"},
+        {name: "Kerang Ming", icon: "🦪", mass: "100 g", lifespan: "500 thn", fact: "Lahir saat Dinasti Ming!"},
+        {name: "Kura-kura Galápagos", icon: "🐢", mass: "250 kg", lifespan: "150 thn", fact: "Tidak menua (negligible senescence)"}
+    ];
+
+    function renderCards(data = widgetData) {
+        const container = document.getElementById('widgetCards');
+        container.innerHTML = '';
+
+        data.forEach(animal => {
+            const card = document.createElement('div');
+            card.className = 'widget-card';
+            card.innerHTML = `
+                <div class="card-header">
+                    <span class="card-icon">${animal.icon}</span>
+                    <span class="card-name">${animal.name}</span>
+                </div>
+                <div class="card-stats">
+                    <div class="stat-item">
+                        <span>Berat:</span>
+                        <span class="stat-value">${animal.mass}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>Umur:</span>
+                        <span class="stat-value">${animal.lifespan}</span>
+                    </div>
+                </div>
+                <div style="font-size: 0.85rem; color: #a0aec0; margin-top: 10px;">
+                    💡 ${animal.fact}
+                </div>
+                ${animal.badge ? `<span class="widget-badge">${animal.badge}</span>` : ''}
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    document.getElementById('widgetSearch').addEventListener('input', function(e) {
+        const term = e.target.value.toLowerCase();
+        const filtered = widgetData.filter(a => 
+            a.name.toLowerCase().includes(term) || 
+            a.fact.toLowerCase().includes(term)
+        );
+        renderCards(filtered);
+    });
+
+    renderCards();
+})();
+</script>
+</div>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panduan Pengembangan Project & Blog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .header {
+        text-align: center;
+        color: white;
+        margin-bottom: 50px;
+        animation: fadeInDown 0.8s ease-out;
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      .header p {
+        font-size: 1.1rem;
+        opacity: 0.95;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+        margin-bottom: 40px;
+      }
+
+      .card {
+        background: white;
+        border-radius: 20px;
+        padding: 35px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: fadeInUp 0.8s ease-out;
+        animation-fill-mode: both;
+      }
+
+      .card:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .card:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+
+      .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+      }
+
+      .card-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 25px;
+        padding-bottom: 20px;
+        border-bottom: 3px solid #667eea;
+      }
+
+      .card-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+      }
+
+      .card-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2d3748;
+      }
+
+      .rule-item {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+        padding: 15px;
+        background: linear-gradient(135deg, #f8f9ff 0%, #f1f3ff 100%);
+        border-radius: 12px;
+        border-left: 4px solid #667eea;
+        transition: all 0.3s ease;
+      }
+
+      .rule-item:hover {
+        background: linear-gradient(135deg, #eef1ff 0%, #e6eaff 100%);
+        transform: translateX(5px);
+      }
+
+      .rule-number {
+        flex-shrink: 0;
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.9rem;
+      }
+
+      .rule-text {
+        color: #4a5568;
+        font-size: 0.95rem;
+        flex-grow: 1;
+      }
+
+      .highlight {
+        background: linear-gradient(120deg, #fff4d1 0%, #ffe89b 100%);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 600;
+        color: #744210;
+      }
+
+      .footer {
+        text-align: center;
+        color: white;
+        margin-top: 50px;
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+      }
+
+      .footer p {
+        font-size: 0.9rem;
+        opacity: 0.9;
+      }
+
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .header h1 {
+          font-size: 1.8rem;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .card {
+          padding: 25px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>📋 Panduan Pengembangan</h1>
+        <p>Standar & Best Practices untuk Project Web/Plugin dan Blog</p>
+      </div>
+
+      <div class="grid">
+        <!-- Card 1: Project Web/Plugin -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">💻</div>
+            <h2 class="card-title">Project Web/Plugin</h2>
+          </div>
+
+          <div class="rule-item">
+            <div class="rule-number">1</div>
+            <div class="rule-text">
+              Jangan hapus file yang ada didalam folder tanpa sepengetahuan user
+            </div>
+          </div>
+
+          <div class="rule-item">
+            <div class="rule-number">2</div>
+            <div class="rule-text">
+              Ketika melakukan perubahan atau penambahan fitur, pastikan untuk
+              memberikan dokumentasi di dalam
+              <span class="highlight">dev_log.md</span>
+            </div>
+          </div>
+
+          <div class="rule-item">
+            <div class="rule-number">3</div>
+            <div class="rule-text">
+              Fitur update harus terdokumentasi dengan jelas setelah melakukan
+              perubahan fitur
+            </div>
+          </div>
+
+          <div class="rule-item">
+            <div class="rule-number">4</div>
+            <div class="rule-text">
+              Pastikan bahwa menjelaskan plan atau rencana perubahan fitur
+              dengan jelas sebelum melakukan perubahan kode
+            </div>
+          </div>
+
+          <div class="rule-item">
+            <div class="rule-number">5</div>
+            <div class="rule-text">
+              Jangan menghapus kode yang berfungsi dengan baik, jika ingin
+              menambahkan silahkan tambahkan kode baru saja tanpa menghapus kode
+              yang ada, jika memang bisa
+            </div>
+          </div>
+
+          <div class="rule-item">
+            <div class="rule-number">6</div>
+            <div class="rule-text">
+              Untuk awal selalu buat file
+              <span class="highlight">bat</span> dalam folder project yang
+              berfungsi membuat folder dan mengcopy file ke dalam folder bernama
+              <span class="highlight">"backup"</span>
+            </div>
+          </div>
+
+          <div class="rule-item">
+            <div class="rule-number">7</div>
+            <div class="rule-text">
+              Gunakan file dalam folder backup sebagai cara revert back/rolling
+              back jika terjadi corrupt pada file
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Pembuatan Blog -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">✍️</div>
+            <h2 class="card-title">Pembuatan Blog</h2>
+          </div>
+
+          <div class="rule-item">
+            <div class="rule-number">1</div>
+            <div class="rule-text">
+              Membuat blog harus terdokumentasi dengan jelas setelah melakukan
+              perubahan fitur
+            </div>
+          </div>
+
+          <div class="rule-item">
+            <div class="rule-number">2</div>
+            <div class="rule-text">
+              Mendapatkan informasi yang dibutuhkan melalui
+              <span class="highlight">website yang terpercaya</span>
+            </div>
+          </div>
+
+          <div class="rule-item">
+            <div class="rule-number">3</div>
+            <div class="rule-text">
+              User akan memberikan informasi yang akan dibutuhkan oleh blog,
+              gunakan itu sebagai isi blog
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>
+          💡 <strong>Catatan:</strong> Ikuti panduan ini untuk memastikan
+          workflow development yang konsisten dan terorganisir
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

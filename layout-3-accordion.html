@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan Pengembangan - Accordion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #1a202c;
+            min-height: 100vh;
+            padding: 50px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(99, 102, 241, 0.5);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #94a3b8;
+        }
+
+        .accordion {
+            margin-bottom: 20px;
+        }
+
+        .accordion-section {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            animation: slideUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .accordion-section:nth-child(1) { animation-delay: 0.1s; }
+        .accordion-section:nth-child(2) { animation-delay: 0.2s; }
+
+        .accordion-section:hover {
+            border-color: #6366f1;
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .accordion-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 30px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .accordion-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .accordion-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .accordion-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .accordion-toggle {
+            width: 40px;
+            height: 40px;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: #6366f1;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .accordion-section.active .accordion-toggle {
+            transform: rotate(45deg);
+            background: #6366f1;
+            color: white;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .accordion-section.active .accordion-content {
+            max-height: 2000px;
+        }
+
+        .accordion-inner {
+            padding: 0 30px 30px;
+        }
+
+        .rule-item {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border-left: 4px solid #6366f1;
+            transition: all 0.3s ease;
+        }
+
+        .rule-item:hover {
+            background: rgba(99, 102, 241, 0.1);
+            transform: translateX(10px);
+        }
+
+        .rule-number {
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            box-shadow: 0 3px 10px rgba(99, 102, 241, 0.3);
+        }
+
+        .rule-text {
+            color: #cbd5e1;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .highlight {
+            color: #fbbf24;
+            font-weight: 600;
+            background: rgba(251, 191, 36, 0.1);
+            padding: 2px 8px;
+            border-radius: 6px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .accordion-header {
+                padding: 20px;
+            }
+
+            .accordion-title {
+                font-size: 1.3rem;
+            }
+
+            .accordion-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Panduan Pengembangan</h1>
+            <p>Klik untuk expand dan lihat detail setiap kategori</p>
+        </div>
+
+        <div class="accordion">
+            <!-- Section 1: Project Web/Plugin -->
+            <div class="accordion-section active">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-left">
+                        <div class="accordion-icon">💻</div>
+                        <div class="accordion-title">Project Web/Plugin</div>
+                    </div>
+                    <div class="accordion-toggle">+</div>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <div class="rule-item">
+                            <div class="rule-number">1</div>
+                            <div class="rule-text">Jangan hapus file yang ada didalam folder tanpa sepengetahuan user</div>
+                        </div>
+                        <div class="rule-item">
+                            <div class="rule-number">2</div>
+                            <div class="rule-text">Ketika melakukan perubahan atau penambahan fitur, pastikan untuk memberikan dokumentasi di dalam <span class="highlight">dev_log.md</span></div>
+                        </div>
+                        <div class="rule-item">
+                            <div class="rule-number">3</div>
+                            <div class="rule-text">Fitur update harus terdokumentasi dengan jelas setelah melakukan perubahan fitur</div>
+                        </div>
+                        <div class="rule-item">
+                            <div class="rule-number">4</div>
+                            <div class="rule-text">Pastikan bahwa menjelaskan plan atau rencana perubahan fitur dengan jelas sebelum melakukan perubahan kode</div>
+                        </div>
+                        <div class="rule-item">
+                            <div class="rule-number">5</div>
+                            <div class="rule-text">Jangan menghapus kode yang berfungsi dengan baik, jika ingin menambahkan silahkan tambahkan kode baru saja tanpa menghapus kode yang ada, jika memang bisa</div>
+                        </div>
+                        <div class="rule-item">
+                            <div class="rule-number">6</div>
+                            <div class="rule-text">Untuk awal selalu buat file <span class="highlight">bat</span> dalam folder project yang berfungsi membuat folder dan mengcopy file ke dalam folder bernama <span class="highlight">"backup"</span></div>
+                        </div>
+                        <div class="rule-item">
+                            <div class="rule-number">7</div>
+                            <div class="rule-text">Gunakan file dalam folder backup sebagai cara revert back/rolling back jika terjadi corrupt pada file</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Pembuatan Blog -->
+            <div class="accordion-section active">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-left">
+                        <div class="accordion-icon">✍️</div>
+                        <div class="accordion-title">Pembuatan Blog</div>
+                    </div>
+                    <div class="accordion-toggle">+</div>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <div class="rule-item">
+                            <div class="rule-number">1</div>
+                            <div class="rule-text">Membuat blog harus terdokumentasi dengan jelas setelah melakukan perubahan fitur</div>
+                        </div>
+                        <div class="rule-item">
+                            <div class="rule-number">2</div>
+                            <div class="rule-text">Mendapatkan informasi yang dibutuhkan melalui <span class="highlight">website yang terpercaya</span></div>
+                        </div>
+                        <div class="rule-item">
+                            <div class="rule-number">3</div>
+                            <div class="rule-text">User akan memberikan informasi yang akan dibutuhkan oleh blog, gunakan itu sebagai isi blog</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAccordion(header) {
+            const section = header.parentElement;
+            section.classList.toggle('active');
+        }
+
+        // Auto-open all sections on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.accordion-section');
+            sections.forEach(section => {
+                section.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
